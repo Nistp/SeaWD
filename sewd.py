@@ -35,7 +35,10 @@ dispatch = {
 args = parser.parse_args()
 
 
-dispatch[args.action](args.target)
-
+func = dispatch.get(args.action)
+if func:
+    func(args.target)
+else:
+    print('didnt match any valid actions')
 
 
