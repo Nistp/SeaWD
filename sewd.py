@@ -1,16 +1,6 @@
 import markdown
 import argparse
 
-parser = argparse.ArgumentParser('sewd')
-parser.add_argument('init', help="create a new article folder") 
-parser.add_argument('list', help="list local projects") 
-parser.add_argument('edit', help="edit a project") 
-parser.add_argument('push', help="upload an article") 
-
-args = parser.parse_args()
-
-print(args)
-
 # TODO: accept cli args
 
 # sewd --help
@@ -18,4 +8,34 @@ print(args)
 # sewd publish <article-name>
 # sewd ls
 # sewd takedown <article-name> 
+
+
+parser = argparse.ArgumentParser('sewd')
+parser.add_argument('action', help="make / push") 
+parser.add_argument('target', help="project folder name") 
+
+
+
+def maker(projectname):
+    print('making.. {projectname}')
+    pass
+
+def pusher(projectname):
+    print('pushing.. {projectname}')
+    pass
+
+
+# fugly pattern match dictionary
+dispatch = {
+    'make':maker,
+    'push': pusher 
+        }
+
+
+args = parser.parse_args()
+
+
+dispatch[args.action](args.target)
+
+
 
