@@ -48,3 +48,22 @@ _article-name_ is probably a folder that contains all relevant resources
 - Meta file will have author / date created / date published etc. it is created and managed by seawd-cli
 
 
+
+
+## Tests
+
+to test run `pytest`
+
+
+
+## dependencies 
+
+flask markdown pytest pygments pyCLI maybe.. etc.
+
+eventually run
+pip freeze > requirements.txt
+
+to recreate:
+vitrualenv-3 venv
+source venv/bin/activate
+pip install -r requirements.txt
