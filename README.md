@@ -97,3 +97,5 @@ So now you have remote .git folders and a flask app that keeps track of them.
 - perhaps monitor how often your articles get accessed.
 
 
+
+### TODO: clean up this readme
