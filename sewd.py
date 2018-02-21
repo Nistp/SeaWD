@@ -1,6 +1,10 @@
 import markdown
 import argparse # we might want to replace this later.
 
+import os, sys  # for creating folders and files
+
+path = ... #  set path for the article folder
+
 # TODO: accept cli args
 
 # sewd --help
@@ -15,18 +19,18 @@ parser.add_argument('action', help="make / push / config")
 parser.add_argument('target', help="project folder name") 
 
 
-
-
 def maker(projectname):
     print('making.. {projectname}')
-    # TODO: validate projectname
+    # TODO: validate projectname 
     # lower_case_acticle_name_with_underscohes
-    # check that folder doesn't exist yet
-    # create a folder
-    # cd in it
-    # create a meta.yaml file
-    # create a post.md file
-    # attempt to open it if config knows which editor to use
+    os.chdir("path")  # set the path to the article folder
+    if not os.path.exists('projectname') # check that folder doesn't exist yet
+      os.mkdir('projectname') # create a folder
+    os.chdir('projectname') # cd in it/do we need an exception for this?
+    meta = open("meta.yaml", r+) # what goes in here?
+    post = open("post.md", r+) # what goes in here?
+    # seems like there isn't a command to just create a file and not open it
+    # should we add exceptions to these two then?
 
 
 
