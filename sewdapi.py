@@ -1,7 +1,13 @@
-import markdown
+#import markdown
 import argparse # we might want to replace this later.
+import sewdsrc
 
-import os, sys  # for creating folders and files
+parser = argparse.ArgumentParser(prog='SewdAPI')
+parser.add_argument("--make" , help="Make the target") 
+parser.add_argument("--push", help="Push the article on Git")
+parser.add_argument("--config", help="Config of smth")
+#parser.add_argument('action', help = "make / push / config")
+args = parser.parse_args()
 
 path = 'Documents/Python_Env/Seawd_Blog'  #  set path for the article folder
 
@@ -14,11 +20,7 @@ path = 'Documents/Python_Env/Seawd_Blog'  #  set path for the article folder
 # sewd takedown <article-name> 
 
 
-parser = argparse.ArgumentParser(prog='SewdAPI')
-##parser.add_argument('--make' , help="Make the target") 
-##parser.add_argument('--push', help="Push the article on Git")
-##parser.add_argument('--config', help="Config of smth")
-parser.add_argument('action', help = "make / push / config")
+
 
 # We could add subparses to make this look neater instead
 
@@ -28,22 +30,27 @@ parser.add_argument('action', help = "make / push / config")
 # fugly pattern match dictionary
 actions = {
     'make':maker,
-    'push': pusher 
+    'push': pusher, 
     'config': configer 
         }
 
 
 # parse arguments, try to match to any known actions
-args = parser.parse_args()
-func = actions.get(args.action)
 
-if func:
-    func(args.target)
-    #if make
+#func = actions.get(args.action)
+ 
+#if func:
+    #func(args.target)
 
-    #elif push
+if args.make:
+    projectname = str.input("Please enter project/article name!")
+    maker(projectname)
+elif args.push:
+    projectname = str.input("Which article would you like to push?")
+    push(projectname)
+elif args.config:
+    config()
 
-    #elif config
 else:
-    print('didnt match any valid actions')
+    print('Didnt match any valid actions')
 
