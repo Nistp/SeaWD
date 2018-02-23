@@ -1,9 +1,8 @@
-import markdown
 import argparse # we might want to replace this later.
 
 import os, sys  # for creating folders and files
 
-import lame
+import lame # parsing utils and whatnot TODO: rename
 
 parser = argparse.ArgumentParser('sewd')
 parser.add_argument('action', help='make / push / config') 
@@ -12,22 +11,22 @@ parser.add_argument('target', help='project folder name')
 
 def maker(project_name):
     print(f'making.. {project_name}')
-    print(f'__file__ is {__file__}')
     print(f'path to file is {os.path.abspath(__file__)}')
-    print('now how your path is different from my path')
-    root_folder = os.path.dirname((os.path.abspath(__file__))) # can be made grapes again
-    os.chdir(root_folder)   
-    print('TODO: make amd use all_projects foolder path from yaml config')
+    root_folder = os.path.dirname(os.path.abspath(__file__)) 
+    all_projects_folder = os.path.join(root_folder, 'projects')
+    assert os.path.exists(all_projects_folder)
+    os.chdir(all_projects_folder)   
 
     if os.path.exists(project_name):
-        print('project exists, moving there..')
+        print('project already exists')
     else: 
         os.mkdir(project_name)
-    os.chdir(project_name) # these might need to be relative, with os.path.join()
+        os.chdir(project_name) 
 
-    with open(f'{project_name}.md', 'w') as f:
-       f.write('# test') 
-    
+        with open(f'{project_name}.md', 'w') as f:
+            f.write('# test') 
+
+    print('TODO: open file in editor of choice')
 
 
 def pusher(project_name):
@@ -50,7 +49,6 @@ actions = {
 # parse arguments, try to match to any known actions
 args = parser.parse_args()
 func = actions.get(args.action)
-
 
 if func:
     func(args.target)

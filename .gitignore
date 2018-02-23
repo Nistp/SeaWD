@@ -35,3 +35,8 @@ Include
 # virtualenv folders #
 ######################
 venv
+
+
+# blog project folders #
+######################
+projects/**

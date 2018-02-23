@@ -1,74 +1,76 @@
-Flas-ked blog by Seawd
-..
-More to add on later
+# sewdlog
+
+> what?
+
+yet another blog
+
+> why?
+
+dunno.
+
+## Requirements, constraints
+
+- easy cli workflow
+- easy deploy to hosting, CDNs
+- lightweight foundation, no bloat
+- web standards, mobile first
+- not having js on the client should not matter
+- BONUS: make it run in command line browsers :D 
 
 
-Alright, what do we need:
+## WIP:
 
-- Static pages served by apache
-    - landing page (contains links to all posts)
-    - apache config
+- python parkdown
+    - md -> html
 
-- flask page manager (seawd-api) 
-    - takes GET / POST requests from seawd-cli
-    - possibly re-renders landing page
-    - instructs apache what to serve 
+- Jinja2
+    - decorates html with a light theme 
 
-- command line utility
-    - talks to seawd API (via curl maybe) 
+- linode / centos / apache (for now) 
+    - serves static pages, no way
 
-- git integration
+- cli (building with argparse for now)
+    - facilitates local workflow
+    - pushes projects to De Webs!
 
-## Flask App example
-
-`GET /articles` returns a list of all posts
-
-`POST /articles` takes an article and puts it online
+- git
+    - versions / backs up blogposts
 
 
-## Requirements, workflow:
 
+## How should it look
 - Posts are written in md /mmd
-- you write posts locally, possibly all posts are versioned by git
-- when you're ready to publish, run something like
+- work on your stuff locally
+- back up with git (if you so configure)
+- push to hosting with one command
+- perhaps monitor how often your articles get accessed
 
-> `seawd publish article-name`
-
-_article-name_ is probably a folder that contains all relevant resources
+> would be nice to spam everyone on fb / linkedin / twitter every time you release a blog post (c) he who doesn't do social media 
 
 
+
+
+### Project structure?
+
+`sewd push <article-name>` 
+
+<article_name> is a folder that contains all relevant resources
+
+```
 ../myarticle
-
 ├── chart.js
-
 ├── image1.png
-
 ├── image2.png
-
 ├── meta.yaml
-
 └── myarticle.md
-
-
-- Meta file will have author / date created / date published etc. it is created and managed by seawd-cli
+```
 
 
 
 
-## Tests
+## Development 
 
-to test run `pytest`
-
-
-
-## dependencies 
-
-flask markdown pytest pygments pyCLI maybe.. etc.
-
-eventually run
-pip freeze > requirements.txt
-
-To recreate this thing:
+To create this thing:
 
 ```
 vitrualenv-3 venv
@@ -76,26 +78,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Thoughts
+## Tests
 
-Keeping all articles under git is a good idea regargless, and there is no need to reinvent it. At most what we need is a thin layer on top of it to make things nicer.
+to test run `pytest`
 
-- one folder -> one article -> one .git
-- Creating a new article is roughly the same as `git init .`
-- We can abstract away git add/commit/push.
-
-We could make a shadow branch for automatically.
-
-Alternative to this whole git thing is rsync. But it would merely syncronize folders. what if you want to rollback?
-
-So now you have remote .git folders and a flask app that keeps track of them.
-
-## How does it look
-- work on your stuff locally.
-- sync it with remote repo.
-- notify app to publish / take down something
-- perhaps monitor how often your articles get accessed.
+*not that we have a real test suite*
 
 
-
-### TODO: clean up this readme
