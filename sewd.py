@@ -15,6 +15,8 @@ def maker(project_name):
     root_folder = os.path.dirname(os.path.abspath(__file__)) 
     all_projects_folder = os.path.join(root_folder, 'projects')
     assert os.path.exists(all_projects_folder)
+    # TODO: if the project folder doesnt exist
+    #           create it + configure
     os.chdir(all_projects_folder)   
 
     if os.path.exists(project_name):
@@ -35,8 +37,16 @@ def pusher(project_name):
 
 
 def configer():
+    # TODO: put global config inside the projects folder
+    # .config.yaml
+    # 
     pass
 
+
+def load_config():
+    # TODO: read .config.yaml
+    # initialize config object from it (dict eh)
+    pass
 
 actions = {
     'make':maker,
