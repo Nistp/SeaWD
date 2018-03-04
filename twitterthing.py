@@ -13,12 +13,13 @@ Authorize_URL ='https://api.twitter.com/oauth/authorize'
 Access_token_URL =  'https://api.twitter.com/oauth/access_token' 
 
 twitterbot = OAuth1Session(CONSUMER_KEY, client_secret=CONSUMER_SECRET)
+#This should be either combined with the parse_autho_response method or be used on its own
 fetch_response = twitterbot.fetch_request_token(Request_token_URL)
 
 rok = fetch_response.get('oauth_token')
 ros = fetch_response.get('oauth_token_secret')
 
-#gets messed up here with an 89 error code
+#gets messed up here with an 89 error code --look up, use fetch response if you can
 twitterbot_response = twitterbot.parse_authorization_response(Authorize_URL)
 #needed or not? 
 verifier = twitterbot_response.get('oauth_verifier')
