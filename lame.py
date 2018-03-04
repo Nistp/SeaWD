@@ -27,6 +27,9 @@ def build_article(input_file):
     # populate a template
     article = read_file(input_file)
     html = md_to_html(renderer, article)
+
+    print(f'writing {output_file}') 
+    print('TODO: proper build process') 
     
     write_file(
             filename=output_file,
