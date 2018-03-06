@@ -85,9 +85,9 @@ to test run `pytest`
 *not that we have a real test suite*
 
 ## TO-DO:
-1: meta file inside each project that tells whether it's staged for publication or notftp deploy module to shared hosting
-2:html / css in template.html
-3:function that builds all staged projects and a landing page and puts it all into the build folder
-4: twitter thing
-5: editor of choice setting in config, so that when you say you wanna work on a project, it opens your editor from within that folder. (vim / emacs / atom / notepad / whatever )
-6: git - same thing, every project folder should be git initialized if git is in config
+-meta file inside each project that tells whether it's staged for publication or notftp deploy module to shared hosting
+-html / css in template.html
+-function that builds all staged projects and a landing page and puts it all into the build folder
+-twitter thing
+-editor of choice setting in config, so that when you say you wanna work on a project, it opens your editor from within that folder. (vim / emacs / atom / notepad / whatever )
+-git - same thing, every project folder should be git initialized if git is in config
