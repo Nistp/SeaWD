@@ -2,13 +2,13 @@ import argparse # we might want to replace this later.
 
 import os, sys  # for creating folders and files
 
-import lame # parsing utils and whatnot TODO: rename
+from build import build_all, build_article # parsing utils and whatnot TODO: rename
 
 from init_config import init_app # this is init application 
 
 
 def maker(project_name):
-    print(f'making.. {project_name}')
+    print(f"making.. {project_name}")
     try:
         pfolder = config.get('PROJECTS_FOLDER')
         os.chdir(pfolder)
@@ -32,12 +32,21 @@ def pusher(project_name):
     print('pushing.. {project_name}')
     pass
 
+def builder(target):
+    if target == 'all':
+        build_all()
+    else:
+        build_article(target)
 
 def list_projects(target):
-    if target == None:
+    if target == 'all':
         print('showing all')
-    print('something like os.list_dirs(config.PROJECT_FOLDERS')
     print('TODO: keep track of what is published / in progress, etc')
+    with os.scandir(config.get('PROJECTS_FOLDER')) as it:
+        for item in it:
+            if item.is_dir():
+                print(item)
+    
     
 
 
@@ -53,7 +62,7 @@ config = init_app()
 actions = {
     'make':maker,
     'push': pusher,
-    'parse': lame.build_article,
+    'build': builder,
     'list': list_projects
         }
 

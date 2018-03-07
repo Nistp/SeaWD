@@ -84,15 +84,37 @@ to test run `pytest`
 
 *not that we have a real test suite*
 
-## TO-DO:
--meta file inside each project that tells whether it's staged for publication or notftp deploy module to shared hosting
+## TODO:
 
--html / css in template.html
+- meta file inside each project that tells whether it's staged for publication or not
 
--function that builds all staged projects and a landing page and puts it all into the build folder
+- ftp deploy module to shared hosting
 
--twitter thing
+- html / css in template.html
 
--editor of choice setting in config, so that when you say you wanna work on a project, it opens your editor from within that folder. (vim / emacs / atom / notepad / whatever )
+- function that builds all staged projects and a landing page and puts it all into the build folder
 
--git - same thing, every project folder should be git initialized if git is in config
+- twitter thing
+
+- editor of choice setting in config, so that when you say you wanna work on a project, it opens your editor from within that folder. (vim / emacs / atom / notepad / whatever )
+
+- git - same thing, every project folder should be git initialized if git is in config
+
+
+## Research TODO
+
+Well, the deniaal phase is over and now that we're invested enough in this little project... **time to do our homework**
+
+### static site projects
+- katana
+- jekyll
+- gatsby
+
++ whatever else is out there.
+
+### What we need to scout:
+
+- folder tree structure and naming conventions
+- build process
+- configuration and deployment
+

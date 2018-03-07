@@ -17,7 +17,9 @@ def md_to_html(renderer, md_text):
     return html
 
 
-def build_article(input_file):
+def build_article(project_name):
+    print('building {project_name}')
+    ''' 
     base_name = input_file.split('.')[0]
     output_file = f'{base_name}.html'
     # set up a template
@@ -35,3 +37,23 @@ def build_article(input_file):
             filename=output_file,
             content = html
             )
+    '''
+
+
+def build_all():
+    print('building all staged articles')
+    # get a list of all staged projects
+    # feed that list to index.html template
+    # for each staged project
+    #   make a subfolder in the build forlder
+    #   feed markdown et al to article.html template
+    pass
+
+# resulting folder should be:
+#| public
+#|- index.html
+#|- /article1
+#   |-contents? 
+#|- /article2
+
+
