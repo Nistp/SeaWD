@@ -4,7 +4,7 @@ import os, sys  # for creating folders and files
 
 from build import build_all, build_article # parsing utils and whatnot TODO: rename
 
-from init_config import init_app # this is init application 
+from init_config import init_app, write_toml_config, read_toml_config # this is init application 
 
 
 def maker(project_name):
@@ -25,7 +25,9 @@ def maker(project_name):
         with open(f'{project_name}.md', 'w') as f:
             f.write('# ArticleName') 
 
+        write_toml_config({'name': project_name, 'todo': 'timestamp author status etc'},'.meta')
     print('TODO: open file in editor of choice')
+    print('TODO: make a sane meta file')
 
 
 def pusher(project_name):
@@ -34,22 +36,31 @@ def pusher(project_name):
 
 def builder(target):
     if target == 'all':
-        build_all()
+        projects = list_projects(None) # todo refactor this
+        build_all(projects)
     else:
         build_article(target)
 
+
+# we probably want to pre-build it eagerly and cache in some file for tab completion
 def list_projects(target):
-    if target == 'all':
-        print('showing all')
     print('TODO: keep track of what is published / in progress, etc')
+    total = {}
     with os.scandir(config.get('PROJECTS_FOLDER')) as it:
         for item in it:
             if item.is_dir():
-                print(item)
-    
-    
+                print(f'{item.name} \t in progress \t ({item.path})')
+                meta = read_toml_config(f'{item.path}/.meta')
+                obj = {
+                        item.name: {
+                            'path': item.path,
+                            'meta': meta
+                            }
+                        } 
 
-
+                total.update(obj)
+    print(total)
+    return total
 
 
 parser = argparse.ArgumentParser('sewd')

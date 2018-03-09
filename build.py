@@ -19,6 +19,10 @@ def md_to_html(renderer, md_text):
 
 def build_article(project_name):
     print('building {project_name}')
+    print('i should be aware of BUILD_FOLDER and project folder')
+    print('assume build folder exists')
+    print('article_temolate')
+
     ''' 
     base_name = input_file.split('.')[0]
     output_file = f'{base_name}.html'
@@ -40,8 +44,13 @@ def build_article(project_name):
     '''
 
 
-def build_all():
+def build_all(projects):
     print('building all staged articles')
+    print('if build folder isnt there, make it')
+    for project, payload in project.keys():
+        print(project)
+        build_article(project)
+        
     # get a list of all staged projects
     # feed that list to index.html template
     # for each staged project
@@ -57,3 +66,9 @@ def build_all():
 #|- /article2
 
 
+# TODO: start working on the template
+if __name__ == '__main__':
+    t = 'templates/template.html'
+    t = 'projects/sample.md'
+    o = 'build/out.html'
+    simple_build(t,m,o)
