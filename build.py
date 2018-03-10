@@ -66,9 +66,28 @@ def build_all(projects):
 #|- /article2
 
 
+
+
+def simple_build(template, markdown, out):
+    md = read_file(markdown)
+    from jinja2 import Environment, FileSystemLoader
+    env = Environment(
+            loader = FileSystemLoader('templates')
+            )
+    template = env.get_template('template.html')
+    rndr = template.render(article=md)
+    print(rndr)
+    write_file(out, rndr)
+    print('success!') 
+
+
+
+
+
+
 # TODO: start working on the template
 if __name__ == '__main__':
-    t = 'templates/template.html'
-    t = 'projects/sample.md'
+    t = 'template.html'
+    m = 'sample.md'
     o = 'build/out.html'
     simple_build(t,m,o)

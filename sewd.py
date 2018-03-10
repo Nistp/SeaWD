@@ -1,7 +1,7 @@
 import argparse # we might want to replace this later.
 
 import os, sys  # for creating folders and files
-
+import shutil
 from build import build_all, build_article # parsing utils and whatnot TODO: rename
 
 from init_config import init_app, write_toml_config, read_toml_config # this is init application 
@@ -63,18 +63,29 @@ def list_projects(target):
     return total
 
 
+def purge_everything(target):
+    if target=='all':
+        if os.path.exists(CONFPATH):
+            print(f'purging config at {CONFPATH}')
+            os.remove(CONFPATH)
+     
+    if os.path.exists(config.get('PROJECTS_FOLDER')):
+        print(f'purging config at {config.get("PROJECTS_FOLDER")}')
+        shutil.rmtree(config.get('PROJECTS_FOLDER'))
+
 parser = argparse.ArgumentParser('sewd')
 parser.add_argument('action', help='make / push / parse ') 
 parser.add_argument('target', help='project folder name') 
 
-
-config = init_app()
+CONFPATH='.sewd.conf'
+config = init_app(CONFPATH)
 
 actions = {
     'make':maker,
     'push': pusher,
     'build': builder,
-    'list': list_projects
+    'list': list_projects,
+    'purge': purge_everything
         }
 
 
