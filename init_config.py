@@ -36,9 +36,15 @@ def write_toml_config(config, path_to_config):
 
 def init_config(CONFPATH='.sewd.conf'):
     print(f'creating a new config file: {CONFPATH}')
-    username = input('Enter your name:\n'),
+    username = input('Enter your name:\n')
     user = ''.join(username)
     print(f'[USER] - {user} accepted')
+
+
+    editor = input('What is your favorite editor? :)\n')
+    editor_command = ''.join(editor)
+    print(f'[EDITOR] - {editor_command} accepted')
+
     print('[FTP] - edit .sewd.conf file to set up ftp login credentials')
     ftp_site = ''
     ftp_login = ''
@@ -55,7 +61,7 @@ def init_config(CONFPATH='.sewd.conf'):
     BUILD_FOLDER = get_default_folder_path(target_folder='public')
    
     config = {
-        'USER': {'name': user},
+        'USER': {'name': user, 'editor': editor_command},
         'FTP': FTP,
         'TWITTER': TWITTER,
         'BUILD_FOLDER': BUILD_FOLDER,

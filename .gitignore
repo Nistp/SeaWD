@@ -40,3 +40,6 @@ venv
 # blog project folders #
 ######################
 projects/**
+
+
+.sewd.conf

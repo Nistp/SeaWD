@@ -1,6 +1,7 @@
-import argparse # we might want to replace this later.
+#!/usr/bin/env python
+import argparse 
 
-import os, sys  # for creating folders and files
+import os, sys, subprocess, subprocess # note sys is unused
 import shutil
 from build import build_all, build_article # parsing utils and whatnot TODO: rename
 
@@ -18,16 +19,27 @@ def maker(project_name):
 
     if os.path.exists(project_name):
         print('project already exists')
-    else: 
-        os.mkdir(project_name)
-        os.chdir(project_name) 
+        return
+ 
+    os.mkdir(project_name)
+    os.chdir(project_name) 
+    
+    meta = {
+           'title': project_name,
+           'description': 'todo',
+           'status': 'DRAFT'
+        }
 
-        with open(f'{project_name}.md', 'w') as f:
-            f.write('# ArticleName') 
+    write_toml_config(meta,'.meta')
 
-        write_toml_config({'name': project_name, 'todo': 'timestamp author status etc'},'.meta')
-    print('TODO: open file in editor of choice')
-    print('TODO: make a sane meta file')
+    with open(f'{project_name}.md', 'w') as f:
+        f.write('# ArticleName') 
+   
+
+    abspath = os.path.join(os.getcwd(), f"{project_name}.md")
+    editor = config.get('USER').get('editor')
+    subprocess.run([editor , abspath]) 
+    print('goodbye')
 
 
 def pusher(project_name):
@@ -43,24 +55,38 @@ def builder(target):
 
 
 # we probably want to pre-build it eagerly and cache in some file for tab completion
-def list_projects(target):
+def list_projects(target, status='everything'):
     print('TODO: keep track of what is published / in progress, etc')
-    total = {}
-    with os.scandir(config.get('PROJECTS_FOLDER')) as it:
-        for item in it:
-            if item.is_dir():
-                print(f'{item.name} \t in progress \t ({item.path})')
-                meta = read_toml_config(f'{item.path}/.meta')
-                obj = {
-                        item.name: {
-                            'path': item.path,
-                            'meta': meta
-                            }
-                        } 
 
-                total.update(obj)
-    print(total)
-    return total
+
+    with os.scandir(config.get('PROJECTS_FOLDER')) as it:
+        items = [(item.name, item.path) for item in it if item.is_dir()]
+    
+    articles = [] 
+    for name, path in items:
+        metafilepath = os.path.join(path, '.meta')
+        try:
+            meta = read_toml_config(metafilepath)
+        except:
+            print(f'skipping {name} at {path}, no meta file')
+
+        meta.update({
+            'name': name, # name is like id
+            'path' : path, #todo: date modified
+                }) 
+
+        articles.append(meta)
+
+    if status in ['DRAFT','STAGED','PUBLISHED','MODIFIED']: # todo better filter
+        print(f'applying filter {status}')
+        filtered = list(filter(lambda article: article.status == status, articles))
+        articles = filtered
+
+    for article in articles:
+        print(f"{article.get('name')} \t {article.get('status')}")
+
+    return articles
+
 
 
 def purge_everything(target):
@@ -80,6 +106,7 @@ parser.add_argument('target', help='project folder name')
 CONFPATH='.sewd.conf'
 config = init_app(CONFPATH)
 
+# TODO: look at argparse_practice
 actions = {
     'make':maker,
     'push': pusher,
