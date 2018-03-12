@@ -38,5 +38,11 @@ venv
 
 
 # blog project folders #
-######################
+########################
 projects/**
+
+
+# specific files #
+##################
+
+init_config.py
