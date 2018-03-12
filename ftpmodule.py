@@ -4,8 +4,8 @@ import os, sys
 
 project_name = 'test_project'
 ftp_site = config.get('ftp_site')
-ftp_login = config.get('misha')
-ftp_passwd = config.get('horosho')
+ftp_login = config.get('ftp_login')
+ftp_passwd = config.get('ftp_passwd')
 
 #look up and go into the build folder
 pfolder = 'C:/Users/Nikolay/Documents/Python Scripts/test_proj'	#config.get('PROJECTS_FOLDER')
