@@ -3,16 +3,21 @@
 import time, sys, requests, requests_oauthlib
 from requests_oauthlib import OAuth1Session
 
-CONSUMER_KEY = "..."
-CONSUMER_SECRET = "..."
-ACCESS_KEY = "..."
-ACCESS_SECRET = "..."
+from init_config import init_app
+config = init_app('.sewd.conf')
+
+CONSUMER_KEY = config.get('consumer_key')
+CONSUMER_SECRET = config.get('consumer_secret')
+ACCESS_KEY =  config.get('access_key')
+ACCESS_SECRET = config.get('access_secret')
+
+callback_uri = 'https://127.0.0.1/callback'
 
 Request_token_URL = 'https://api.twitter.com/oauth/request_token'
 Authorize_URL ='https://api.twitter.com/oauth/authorize'
 Access_token_URL =  'https://api.twitter.com/oauth/access_token' 
 
-twitterbot = OAuth1Session(CONSUMER_KEY, client_secret=CONSUMER_SECRET)
+twitterbot = OAuth1Session(CONSUMER_KEY, client_secret=CONSUMER_SECRET, callback_uri=callback_uri)
 #This should be either combined with the parse_autho_response method or be used on its own
 fetch_response = twitterbot.fetch_request_token(Request_token_URL)
 
