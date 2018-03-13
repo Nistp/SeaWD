@@ -44,7 +44,5 @@ projects/**
 
 # specific files #
 ##################
-
-init_config.py
 .sewd.conf
 
