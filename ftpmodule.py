@@ -1,16 +1,24 @@
 from ftplib import FTP
 import os, sys
-#from init_config import * #change to a more sensible access to ftp data
 
-project_name = 'test_project'
-ftp_site = config.get('ftp_site')
-ftp_login = config.get('ftp_login')
-ftp_passwd = config.get('ftp_passwd')
+from init_config import init_app
+config = init_app('.sewd.conf')
+
+print(config)
+
+ftpconfig = config['FTP']
+
+print(ftpconfig)
+
+
+ftp_site = ftpconfig['site']
+ftp_login = ftpconfig['login']
+ftp_passwd = ftpconfig['passwd']
 
 #look up and go into the build folder
-pfolder = 'C:/Users/Nikolay/Documents/Python Scripts/test_proj'	#config.get('PROJECTS_FOLDER')
-os.chdir(pfolder)
-os.chdir(project_name)
+build_folder = config.get('BUILD_FOLDER')
+
+os.chdir(build_folder)
 files = os.listdir()
 #look up remote ftp and make a build folder and change into it 
 print("Logging into host")

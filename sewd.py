@@ -49,9 +49,10 @@ def pusher(project_name):
 def builder(target):
     if target == 'all':
         projects = list_projects(None) # todo refactor this
-        build_all(projects)
+        build_all(projects, config)
     else:
-        build_article(target)
+        print('todo: ')
+        #build_article(target)
 
 
 # we probably want to pre-build it eagerly and cache in some file for tab completion
@@ -99,6 +100,9 @@ def purge_everything(target):
         print(f'purging config at {config.get("PROJECTS_FOLDER")}')
         shutil.rmtree(config.get('PROJECTS_FOLDER'))
 
+
+
+#### 
 parser = argparse.ArgumentParser('sewd')
 parser.add_argument('action', help='make / push / parse ') 
 parser.add_argument('target', help='project folder name') 

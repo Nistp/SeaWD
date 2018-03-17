@@ -1,6 +1,9 @@
 import markdown
 from jinja2 import Environment, FileSystemLoader
 
+import os
+
+
 def read_file(filename):
     with open(filename) as f:
         content=f.read()
@@ -14,49 +17,56 @@ def md_to_html(md_text):
     html = markdown.markdown(md_text)
     return html
 
+# might want to do build_folder IO outside of this func
+def build_article(article, template, build_folder):
+    print(f'building {article.get("name")}\nfolder: {article.get("path")} ')
+    print(article)
+    path_to_md = os.path.join(article.get('path'), f'{article.get("name")}.md')
+    # assert that's the case or explicitly require path to md
+    markdown = read_file(path_to_md)
+    markup = md_to_html(markdown)
+    html = template.render(article=markup)
+    # determine the build name
+    output_path = os.path.join(build_folder, f'{article.get("name")}.html') 
+    write_file(filename=output_path, content=html) 
+    print(f'maybe success, check {output_path}')
 
-def build_article(article):
-    print(f'TODO: building {article.get("name")}')
-    print(f'folder: {article.get("path")} ')
 
 
-def build_all(articles):
-    print('TODO: if build folder isnt there, make it')
-    print('TODO: building landing page here')
-
-
-    for article in articles:
-        print(article['name'])
-        build_article(article)
-        
     # get a list of all staged projects
     # feed that list to index.html template
     # for each staged project
     #   make a subfolder in the build forlder
     #   feed markdown et al to article.html template
-    pass
+def build_all(articles, config, build_folder=None):
+    print('TODO: make clean')
+    print('TODO: if build folder isnt there, make it')
+    if not build_folder:
+        build_folder = config.get('BUILD_FOLDER')
+
+    env = Environment(
+            loader = FileSystemLoader('templates')
+            )
+
+    print('TODO: building landing page here')
+    index_template = env.get_template('index.html')
+    html = index_template.render(articles=articles)
+    output_path = os.path.join(build_folder, 'index.html') 
+    write_file(filename=output_path, content=html) 
+
+    print('building projects')
+    template = env.get_template('template.html')
+
+    for article in articles:
+        build_article(article, template, build_folder)
+        
 
 
 def simple_build(template, markdown, out):
     md = read_file(markdown)
     markup = md_to_html(md)
-    env = Environment(
-            loader = FileSystemLoader('templates')
-            )
-    template = env.get_template('template.html')
     rndr = template.render(article=markup)
     print(rndr)
     write_file(out, rndr)
     print('success!') 
 
-
-
-
-
-
-# TODO: start working on the template
-if __name__ == '__main__':
-    t = 'template.html'
-    m = 'sample.md'
-    o = 'build/out.html'
-    simple_build(t,m,o)
