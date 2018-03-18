@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>My personal blog</h1>
+
+<h3>Contents:</h3>
+
+<ul>
+{% for article in articles %}
+
+<li>
+        <a href="{{ article.name }}.html">{{ article.title }}</a> - {{ article.description }}
+</li>
+{% endfor %}
+</ul>
+
+    
+{% endblock %}
+
+

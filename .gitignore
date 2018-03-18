@@ -40,11 +40,10 @@ venv
 # blog project folders #
 ########################
 projects/**
+public/**
 
 
 # specific files #
 ##################
-
-init_config.py
 .sewd.conf
 

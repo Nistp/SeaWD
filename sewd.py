@@ -42,6 +42,30 @@ def maker(project_name):
     print('goodbye')
 
 
+
+def launch_editor(project_name):
+    print(f"opening.. {project_name}")
+    try:
+        root = config.get('PROJECTS_FOLDER')
+        project_folder = os.path.join(root, project_name) 
+        os.chdir(project_folder)
+    except:
+        print(f'I cant get inside {project_folder}')
+        return
+
+    if os.path.exists(f"{project_name}.md"):
+        abspath = os.path.join(os.getcwd(), f"{project_name}.md")
+        editor = config.get('USER').get('editor')
+        subprocess.run([editor , abspath]) 
+    else:
+        print(f'default {project_name}.md not found')
+        # maybe attempt to read meta to see if project name was redefined
+        #meta = read_toml_config('.meta')
+
+    print('goodbye')
+
+
+
 def pusher(project_name):
     print('pushing.. {project_name}')
     pass
@@ -49,9 +73,10 @@ def pusher(project_name):
 def builder(target):
     if target == 'all':
         projects = list_projects(None) # todo refactor this
-        build_all(projects)
+        build_all(projects, config)
     else:
-        build_article(target)
+        print('todo: ')
+        #build_article(target)
 
 
 # we probably want to pre-build it eagerly and cache in some file for tab completion
@@ -67,15 +92,14 @@ def list_projects(target, status='everything'):
         metafilepath = os.path.join(path, '.meta')
         try:
             meta = read_toml_config(metafilepath)
+            meta.update({
+                'name': name, # name is like id
+                'path' : path, #todo: date modified
+                    }) 
+
+            articles.append(meta)
         except:
             print(f'skipping {name} at {path}, no meta file')
-
-        meta.update({
-            'name': name, # name is like id
-            'path' : path, #todo: date modified
-                }) 
-
-        articles.append(meta)
 
     if status in ['DRAFT','STAGED','PUBLISHED','MODIFIED']: # todo better filter
         print(f'applying filter {status}')
@@ -99,6 +123,9 @@ def purge_everything(target):
         print(f'purging config at {config.get("PROJECTS_FOLDER")}')
         shutil.rmtree(config.get('PROJECTS_FOLDER'))
 
+
+
+#### 
 parser = argparse.ArgumentParser('sewd')
 parser.add_argument('action', help='make / push / parse ') 
 parser.add_argument('target', help='project folder name') 
@@ -108,7 +135,8 @@ config = init_app(CONFPATH)
 
 # TODO: look at argparse_practice
 actions = {
-    'make':maker,
+    'make': maker,
+    'edit': launch_editor,
     'push': pusher,
     'build': builder,
     'list': list_projects,
