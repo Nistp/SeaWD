@@ -1,7 +1,7 @@
 import markdown
 from jinja2 import Environment, FileSystemLoader
 
-import os
+import os, shutil
 
 
 def read_file(filename):
@@ -58,8 +58,18 @@ def build_all(articles, config, build_folder=None):
     template = env.get_template('template.html')
 
     for article in articles:
+        # TODO: make a dir and put everything there, 
+        # otherwise projects will overwrite each others resources.
         build_article(article, template, build_folder)
+        print(article['path'])
+        with os.scandir(article['path']) as it:
+            resources = [(item.name, item.path) for item in it if item.name not in ['.meta', f"{article.get('name')}.md"]]
         
+        print(resources)
+        print('about to change these')
+        for name, path in resources:
+            print(f"name is {name}, path is {path}. I copy it in {build_folder}")
+            shutil.copy2(src=path, dst=os.path.join(build_folder, name)) #see if preserves date modified, permissions
 
 
 def simple_build(template, markdown, out):

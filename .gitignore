@@ -40,6 +40,7 @@ venv
 # blog project folders #
 ########################
 projects/**
+public/**
 
 
 # specific files #
